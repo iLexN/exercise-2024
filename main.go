@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	controllers "go1/controller"
 	"net/http"
 )
 
@@ -23,21 +24,7 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"message": "Hello, World!"})
 	})
 
-	router.POST("/login", func(c *gin.Context) {
-		var loginInfo LoginInfo
-
-		if err := c.ShouldBindJSON(&loginInfo); err != nil {
-			c.JSON(400, gin.H{"error": "Invalid request"})
-		}
-
-		fmt.Printf(
-			"Got the login with %s (%s)\n",
-			loginInfo.Username,
-			loginInfo.Password,
-		)
-
-		c.JSON(200, gin.H{"message": "OK"})
-	})
+	router.POST("/login", controllers.LoginHandler)
 
 	// Start the server
 	err = router.Run(":8080")
