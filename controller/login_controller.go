@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"go1/services"
 )
 
 type LoginForm struct {
@@ -21,6 +22,8 @@ func LoginHandler(c *gin.Context) {
 	// Process the username and password
 	// You can access the values using loginForm.Username and loginForm.Password
 	fmt.Printf("Received login request with username: %s, password: %s\n", loginForm.Username, loginForm.Password)
+
+	services.DefaultLogger.Info("hello")
 
 	c.JSON(200, gin.H{"message": "Login successful"})
 }

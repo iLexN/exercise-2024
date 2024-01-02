@@ -30,3 +30,10 @@ go get github.com/gin-gonic/gin
 
 ```
 
+#### add logger
+
+```shell
+go get -u github.com/rs/zerolog/log
+
+```
+
