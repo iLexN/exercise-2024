@@ -4,6 +4,7 @@ var DefaultLogger Logger
 
 type Logger interface {
 	Info(msg string)
+	Error(msg string, err error)
 }
 
 // The init() function in Go is a special function that is
