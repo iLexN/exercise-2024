@@ -21,9 +21,10 @@ func LoginHandler(c *gin.Context) {
 
 	// Process the username and password
 	// You can access the values using loginForm.Username and loginForm.Password
-	fmt.Printf("Received login request with username: %s, password: %s\n", loginForm.Username, loginForm.Password)
+	//	fmt.Printf("Received login request with username: %s, password: %s\n", loginForm.Username, loginForm.Password)
 
-	logger.DefaultLogger.Info("hello")
+	msg := fmt.Sprintf("Received login request with username: %s, password: %s\n", loginForm.Username, loginForm.Password)
+	logger.DefaultLogger.Info(msg)
 
 	c.JSON(200, gin.H{"message": "Login successful"})
 }
