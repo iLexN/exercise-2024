@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	controllers "go1/controller"
-	"net/http"
+	"go1/services/route_service"
 )
+
+import "go1/services/dev_debug"
 
 func main() {
 	// Create a new Gin router
@@ -19,12 +20,7 @@ func main() {
 		return
 	}
 
-	// Define a route and its handler function
-	router.GET("/hello", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "Hello, World!"})
-	})
-
-	router.POST("/login", controllers.LoginHandler)
+    route_service.CreateRoute(router)
 
 	// Start the server
 	err = router.Run(":8080")
