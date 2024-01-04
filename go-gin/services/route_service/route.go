@@ -14,4 +14,3 @@ func CreateRoute(r *gin.Engine) {
 
 	r.POST("/login", controllers.LoginHandler)
 }
-

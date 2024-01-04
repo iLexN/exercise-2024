@@ -6,8 +6,6 @@ import (
 	"go1/services/route_service"
 )
 
-import "go1/services/dev_debug"
-
 func main() {
 	// Create a new Gin router
 	router := gin.Default()
@@ -20,7 +18,7 @@ func main() {
 		return
 	}
 
-    route_service.CreateRoute(router)
+	route_service.CreateRoute(router)
 
 	// Start the server
 	err = router.Run(":8080")

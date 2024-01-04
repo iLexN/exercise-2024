@@ -5,7 +5,7 @@ services:
     build:
       context: ./go-gin
       dockerfile: Dockerfile
-#    volumes:
-#      - ./go-gin:/app
+    volumes:
+      - ./go-gin:/app
     ports:
       - "8080:8080"

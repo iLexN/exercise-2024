@@ -8,6 +8,7 @@ go fmt
 
 gofmt -w main.go
 
+gofmt -w -l .
 ```
 
 #### run or build

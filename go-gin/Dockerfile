@@ -29,5 +29,5 @@ RUN go build -o myapp
 EXPOSE 8080
 
 # Set the command to run the executable
-CMD ["./myapp"]
-#CMD tail -f /dev/null
+# CMD ["./myapp"]
+CMD tail -f /dev/null

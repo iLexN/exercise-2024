@@ -22,7 +22,7 @@ func LoginHandler(c *gin.Context) {
 	msg := fmt.Sprintf("Received login request with username: %s, password: %s\n", loginForm.Username, loginForm.Password)
 	logger.DefaultLogger.Info(msg)
 
-	jwtToken , err := jwt_service.
+	jwtToken, err := jwt_service.
 		FromLoginForm(loginForm).
 		CreateJwt()
 
