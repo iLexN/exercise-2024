@@ -1,6 +1,9 @@
 # Use the official Go image as the base image
 FROM golang:latest AS builder
 
+# add linter
+RUN go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+
 # Set the working directory inside the container
 WORKDIR /app
 
