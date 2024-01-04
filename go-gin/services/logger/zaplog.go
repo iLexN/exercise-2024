@@ -23,3 +23,7 @@ func (l ZapLog) Info(msg string) {
 	s := l.logger.Sugar()
 	s.Info(msg)
 }
+
+func (l ZapLog) Error(msg string, err errror){
+	// todo: 
+}
