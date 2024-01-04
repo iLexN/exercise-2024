@@ -24,6 +24,6 @@ func (l ZapLog) Info(msg string) {
 	s.Info(msg)
 }
 
-func (l ZapLog) Error(msg string, err errror){
+func (l ZapLog) Error(msg string, err error){
 	// todo: 
 }
