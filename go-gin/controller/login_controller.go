@@ -22,9 +22,14 @@ func LoginHandler(c *gin.Context) {
 	msg := fmt.Sprintf("Received login request with username: %s, password: %s\n", loginForm.Username, loginForm.Password)
 	logger.DefaultLogger.Info(msg)
 
-	jwtToken := jwt_service.
+	jwtToken , err := jwt_service.
 		FromLoginForm(loginForm).
 		CreateJwt()
+
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
 
 	c.JSON(200, gin.H{
 		"message":      "Login successful",

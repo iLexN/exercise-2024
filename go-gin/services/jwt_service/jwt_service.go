@@ -22,7 +22,7 @@ type UserGenJwt struct {
 	username string
 }
 
-func (g UserGenJwt) CreateJwt() string {
+func (g UserGenJwt) CreateJwt() (string , error) {
 	// Define the secret key used to sign the token
 	secretKey := []byte("my-secret-key111")
 
@@ -48,8 +48,8 @@ func (g UserGenJwt) CreateJwt() string {
 	signedToken, err := token.SignedString(secretKey)
 	if err != nil {
 		logger.DefaultLogger.Error("Failed to sign the token:", err)
-		return ""
+		return "", err
 	}
 
-	return signedToken
+	return signedToken, nil
 }
