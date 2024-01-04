@@ -37,3 +37,8 @@ func CreateJwt(u *UserGenJwt) (string, error) {
 
 	return signedToken, nil
 }
+
+type MyCustomClaims struct {
+	Role string `json:"role"`
+	jwt.RegisteredClaims
+}
