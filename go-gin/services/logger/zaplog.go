@@ -9,12 +9,12 @@ type ZapLog struct {
 	logger *zap.Logger
 }
 
-func CreateZapLog() ZapLog {
+func CreateZapLog() *ZapLog {
 	logger, err := zap.NewProduction()
 	if err != nil {
 		os.Exit(2)
 	}
-	return ZapLog{
+	return &ZapLog{
 		logger: logger,
 	}
 }

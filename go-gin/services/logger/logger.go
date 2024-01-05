@@ -1,6 +1,6 @@
 package logger
 
-var DefaultLogger Logger
+var DefaultLogger Logger //= CreateZeroLog()
 
 type Logger interface {
 	Info(msg string)

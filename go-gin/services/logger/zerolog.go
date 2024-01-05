@@ -15,7 +15,7 @@ func (l ZeroLog) Error(msg string, err error) {
 	log.Error().Err(err).Msg(msg)
 }
 
-func CreateZeroLog() ZeroLog {
+func CreateZeroLog() *ZeroLog {
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-	return ZeroLog{}
+	return &ZeroLog{}
 }
