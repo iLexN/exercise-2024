@@ -3,10 +3,16 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"go1/services/logger"
 	"go1/services/route_service"
 )
 
+//var DefaultLogger logger.Logger = logger.CreateZeroLog()
+
 func main() {
+
+	logger.DefaultLogger = logger.CreateZeroLog()
+
 	// Create a new Gin router
 	router := gin.Default()
 
