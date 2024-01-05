@@ -6,10 +6,12 @@ import (
 
 type UserGenJwt struct {
 	Username string
+	Role     string
 }
 
 func FromLoginForm(loginForm usecase.LoginForm) *UserGenJwt {
 	return &UserGenJwt{
 		Username: loginForm.Username,
+		Role:     "Admin",
 	}
 }
