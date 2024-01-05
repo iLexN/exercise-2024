@@ -34,3 +34,15 @@ go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 golangci-lint run
 
 ```
+
+
+#### ApacheBench
+```shell
+ab -n 100 -c 100 -T 'application/json' -p payload.json http://localhost:8000/api/endpoint
+```
+Here's what each option does:
+- `-n 100`: Specifies the number of requests to send. Adjust this value according to your needs.
+- `-c 100`: Sets the concurrency level, indicating how many requests to send concurrently. Adjust this value as required.
+- `-T 'application/json'`: Specifies the content type of the request payload as JSON.
+- `-p payload.json`: Specifies the path to a file containing the JSON payload. Create a file named `payload.json` and put the JSON data in it.
+- `http://localhost:8000/api/endpoint`: Replace this with the actual URL of your local API endpoint.
