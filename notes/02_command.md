@@ -39,6 +39,8 @@ golangci-lint run
 #### ApacheBench
 ```shell
 ab -n 100 -c 100 -T 'application/json' -p payload.json http://localhost:8000/api/endpoint
+
+ab -n 100 -c 100 -H "Authorization: Bearer your_token" http://localhost:8000/api/endpoint
 ```
 Here's what each option does:
 - `-n 100`: Specifies the number of requests to send. Adjust this value according to your needs.

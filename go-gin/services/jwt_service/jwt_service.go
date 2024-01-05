@@ -1,6 +1,7 @@
 package jwt_service
 
 import (
+	"fmt"
 	"github.com/golang-jwt/jwt/v5"
 	"go1/services/logger"
 	"time"
@@ -36,6 +37,21 @@ func CreateJwt(u *UserGenJwt) (string, error) {
 	}
 
 	return signedToken, nil
+}
+
+func Decode(tokenString string) (*MyCustomClaims, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &MyCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+		// Provide the key or public key to validate the token's signature
+		return []byte("my-secret-key111"), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
+		return claims, nil
+	} else {
+		return nil, fmt.Errorf("invalid token")
+	}
 }
 
 type MyCustomClaims struct {

@@ -3,7 +3,7 @@ package middleware
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"go1/services/logger"
+	"go1/services/jwt_service"
 	"net/http"
 	"regexp"
 )
@@ -21,7 +21,17 @@ func AuthJwt() gin.HandlerFunc {
 			return
 		}
 
-		logger.DefaultLogger.Info(bearerToken)
+		userInfo, err := jwt_service.Decode(bearerToken)
+
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+			// the return do not stop the response.
+			// so need to abort it.
+			c.Abort()
+			return
+		}
+
+		c.Set("userInfo", userInfo)
 
 		c.Next()
 	}
