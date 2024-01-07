@@ -9,6 +9,16 @@ type ZapLog struct {
 	logger *zap.Logger
 }
 
+func (l ZapLog) Info(msg string) {
+	s := l.logger.Sugar()
+	s.Info(msg)
+}
+
+func (l ZapLog) Error(msg string, err error) {
+	s := l.logger.Sugar()
+	s.Error(msg, err)
+}
+
 func CreateZapLog() *ZapLog {
 	logger, err := zap.NewProduction()
 	if err != nil {
@@ -17,13 +27,4 @@ func CreateZapLog() *ZapLog {
 	return &ZapLog{
 		logger: logger,
 	}
-}
-
-func (l ZapLog) Info(msg string) {
-	s := l.logger.Sugar()
-	s.Info(msg)
-}
-
-func (l ZapLog) Error(msg string, err error) {
-	// todo:
 }

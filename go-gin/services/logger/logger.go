@@ -12,6 +12,6 @@ type Logger interface {
 // It is typically used for initialization tasks,
 // such as setting up global variables, configuring packages,
 func init() {
-	//	DefaultLogger = CreateZapLog()
-	DefaultLogger = CreateZeroLog()
+	DefaultLogger = CreateZapLog()
+	//	DefaultLogger = CreateZeroLog()
 }
