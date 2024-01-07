@@ -5,6 +5,7 @@ import (
 	"log"
 )
 
+// JwtConfig gobal var, may use in defferent file
 var JwtConfig JwtSetting
 
 func init() {
