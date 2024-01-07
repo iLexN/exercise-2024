@@ -37,3 +37,9 @@ go get -u github.com/rs/zerolog/log
 
 ```
 
+#### add env
+
+```shell
+go get github.com/joho/godotenv/cmd/godotenv
+```
+
