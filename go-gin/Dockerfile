@@ -4,6 +4,10 @@ FROM golang:latest AS builder
 # add linter
 RUN go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
+# install cli tool
+RUN go install github.com/spf13/cobra-cli@latest
+
+
 # Set the working directory inside the container
 WORKDIR /app
 
