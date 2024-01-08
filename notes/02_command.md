@@ -43,8 +43,6 @@ ab -n 100 -c 100 -T 'application/json' -p payload.json http://localhost:8000/api
 ab -n 100 -c 100 -H "Authorization: Bearer your_token" http://localhost:8000/api/endpoint
 ```
 
-Here's what each option does:
-
 - `-n 100`: Specifies the number of requests to send. Adjust this value according to your needs.
 - `-c 100`: Sets the concurrency level, indicating how many requests to send concurrently. Adjust this value as required.
 - `-T 'application/json'`: Specifies the content type of the request payload as JSON.
@@ -64,4 +62,27 @@ import "github.com/spf13/cobra"
 
 ```shell
 go install github.com/spf13/cobra-cli@latest
+```
+
+#### grpc
+
+###### install
+
+https://grpc.io/docs/protoc-installation/
+
+```
+brew install protobuf
+protoc --version
+```
+
+plugins
+```
+$ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+$ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+```
+
+```
+protoc --go_out=. --go_opt=paths=source_relative \
+--go-grpc_out=. --go-grpc_opt=paths=source_relative \
+hello/hello.proto
 ```
