@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -25,6 +26,15 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		fmt.Println("Root command called")
+
+		for _, arg := range args {
+			fmt.Println(arg)
+		}
+
+		flags := cmd.Flags()
+		flags.VisitAll(func(flag *pflag.Flag) {
+			fmt.Printf("Flag: %s, Value: %s\n", flag.Name, flag.Value)
+		})
 	},
 }
 
