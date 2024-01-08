@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"fmt"
+	//	"fmt"
 	"github.com/gin-gonic/gin"
 	"go1/services/jwt_service"
-	"go1/services/logger"
+	//	"go1/services/logger"
 	"go1/usecase"
 )
 
@@ -19,8 +19,8 @@ func LoginHandler(c *gin.Context) {
 	// Process the username and password
 	// You can access the values using loginForm.Username and loginForm.Password
 
-	msg := fmt.Sprintf("Received login request with username: %s, password: %s", loginForm.Username, loginForm.Password)
-	logger.DefaultLogger.Info(msg)
+	//	msg := fmt.Sprintf("Received login request with username: %s, password: %s", loginForm.Username, loginForm.Password)
+	//	logger.DefaultLogger.Info(msg)
 
 	user := jwt_service.
 		FromLoginForm(loginForm)
