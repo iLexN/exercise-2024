@@ -11,7 +11,7 @@ type Logger interface {
 // automatically called before the program starts.
 // It is typically used for initialization tasks,
 // such as setting up global variables, configuring packages,
-//func init() {
-//	//	DefaultLogger = CreateZapLog()
-//	DefaultLogger = CreateZeroLog()
-//}
+func init() {
+	DefaultLogger = CreateZapLog()
+	//	DefaultLogger = CreateZeroLog()
+}

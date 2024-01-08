@@ -3,14 +3,15 @@ package jwt_service
 import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
+	"go1/services/env"
 	"go1/services/logger"
 	"time"
 )
 
 func CreateJwt(u *UserGenJwt) (string, error) {
 	// Define the secret key used to sign the token
-	secretKey := []byte("my-secret-key111")
-
+	secretKey := []byte(env.JwtConfig.Secret)
+	logger.DefaultLogger.Info("jwt secret is " + env.JwtConfig.Secret)
 	// Define the payload of the token
 	claims := MyCustomClaims{
 		"Admin",
@@ -19,7 +20,7 @@ func CreateJwt(u *UserGenJwt) (string, error) {
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 			NotBefore: jwt.NewNumericDate(time.Now()),
-			Issuer:    "test.local",
+			Issuer:    env.JwtConfig.Issuer,
 			Subject:   u.Username,
 			//			ID:        "1",
 			//			Audience:  []string{"somebody_else"},
@@ -42,7 +43,7 @@ func CreateJwt(u *UserGenJwt) (string, error) {
 func Decode(tokenString string) (*MyCustomClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &MyCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		// Provide the key or public key to validate the token's signature
-		return []byte("my-secret-key111"), nil
+		return []byte(env.JwtConfig.Secret), nil
 	})
 	if err != nil {
 		return nil, err
