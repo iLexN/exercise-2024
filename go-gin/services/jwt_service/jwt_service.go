@@ -11,7 +11,7 @@ import (
 func CreateJwt(u *UserGenJwt) (string, error) {
 	// Define the secret key used to sign the token
 	secretKey := []byte(env.JwtConfig.Secret)
-	logger.DefaultLogger.Info("jwt secret is " + env.JwtConfig.Secret)
+
 	// Define the payload of the token
 	claims := MyCustomClaims{
 		"Admin",
