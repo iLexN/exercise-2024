@@ -3,7 +3,7 @@ package route_service
 import (
 	"github.com/gin-gonic/gin"
 	controllers "go1/controller"
-	middleware "go1/middleware"
+	"go1/middleware"
 	"net/http"
 )
 
@@ -15,4 +15,6 @@ func CreateRoute(r *gin.Engine) {
 
 	r.POST("/login", controllers.LoginHandler)
 	r.GET("/try-check-jwt", middleware.AuthJwt(), controllers.CheckJwt)
+
+	r.GET("/grpc-hi", controllers.HelloGrpc)
 }

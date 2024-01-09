@@ -12,12 +12,12 @@
 - redis queue
 - logger
 - env
+- grpc client
 
 #### todo
 
 - test
 - db
-- grpc client
 - api client call
 - code refactoring
 
