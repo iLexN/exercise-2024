@@ -37,6 +37,11 @@ Router::addRoute(['GET', 'POST', 'HEAD'], '/try-check-jwt', [App\Controller\Inde
     'middleware' => [Performance::class, JwtToUser::class],
 ]);
 
+Router::addRoute(['POST'], '/player-queue', [App\Controller\PlayerQueue::class, 'queue'], [
+    'middleware' => [Performance::class],
+]);
+
+
 Router::get('/favicon.ico', function () {
     return '';
 });

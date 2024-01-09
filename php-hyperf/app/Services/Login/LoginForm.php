@@ -7,11 +7,11 @@ namespace App\Services\Login;
 
 use Hyperf\HttpServer\Contract\RequestInterface;
 
-class LoginForm
+readonly class LoginForm
 {
     private function __construct(
-        public readonly string $username,
-        public readonly string $password,
+        public string $username,
+        public string $password,
     )
     {
     }
