@@ -43,3 +43,41 @@ go get -u github.com/rs/zerolog/log
 go get github.com/joho/godotenv/cmd/godotenv
 ```
 
+#### cli - cobra
+
+https://github.com/spf13/cobra
+
+```shell
+go get -u github.com/spf13/cobra@latest
+
+import "github.com/spf13/cobra"
+
+```
+
+```shell
+go install github.com/spf13/cobra-cli@latest
+```
+
+#### grpc
+
+###### install
+
+https://grpc.io/docs/protoc-installation/
+
+```
+brew install protobuf
+protoc --version
+```
+
+plugins
+```
+$ go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+$ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+```
+
+```
+protoc --go_out=. --go_opt=paths=source_relative \
+--go-grpc_out=. --go-grpc_opt=paths=source_relative \
+hello/hello.proto
+```
+
