@@ -1,6 +1,6 @@
 version: '3'
 services:
-  gin:
+  go-gin:
     container_name: gin
     build:
       context: ./go-gin
@@ -9,5 +9,57 @@ services:
       - ./go-gin:/app
     ports:
       - "8080:8080"
-#    environment:
-#      - GIN_MODE=release
+  #    environment:
+  #      - GIN_MODE=release
+
+  go-grpc-server:
+    container_name: go-grpc-server
+    build:
+      context: ./go-grpc
+      dockerfile: Dockerfile
+    volumes:
+      - ./go-grpc:/app
+    ports:
+      - "50051:50051"
+
+  php-hyperf:
+    container_name: php-hyperf
+    image: hyperf-skeleton
+    build:
+      context: ./php-hyperf
+    volumes:
+      - ./php-hyperf:/opt/www
+      - /opt/www/runtime
+    ports:
+      - "9501:9501"
+    environment:
+      - APP_ENV=dev
+      - SCAN_CACHEABLE=false
+      #      - APP_ENV=prod
+      #      - SCAN_CACHEABLE=true
+      - JWT_SECRET=my-secret-key111
+      - JWT_ISSUER=test.local
+
+  gserver:
+    container_name: php-grpc-server
+    image: hyperf-skeleton
+    build:
+      context: ./php-hyperf
+    volumes:
+      - ./php-hyperf:/opt/www
+      - /opt/www/runtime
+    ports:
+      - "9503:9503"
+    environment:
+      - APP_ENV=dev
+      - SCAN_CACHEABLE=false
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+
+networks:
+  default:
+    name: hyperf-skeleton
