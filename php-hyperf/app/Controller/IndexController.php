@@ -62,12 +62,18 @@ class IndexController extends AbstractController
         $request->setName('hyperf');
         $request->setSex(1);
 
-        /**
-         * @var HiReply $reply
-         */
-        [$reply, $status] = $client->sayHello($request);
+        try {
+            [$reply, $status] = $client->sayHello($request);
+        } catch (\Throwable $exception) {
+            return [
+                'message' => $exception->getMessage(),
+                'user_name' => '',
+                'user_sex' => -1,
+                'status' => -1,
+            ];
+        }
 
-        $this->logger->info('replay',[$reply]);
+        $this->logger->info('replay', [$reply]);
 
         $message = $reply->getMessage();
         $user = $reply->getUser();
@@ -90,8 +96,13 @@ class IndexController extends AbstractController
 
     public function helloGo(): array
     {
+        // seem call golang grpc few sec after have error
         // This client is coroutine-safe and can be reused
-        $client = $this->goClient;
+        //$client = $this->goClient;
+        // after changed to create obj, error gone
+        $client = new HiClient('go-grpc-server:50051', [
+            'credentials' => null,
+        ]);
 
         return $this->say($client);
     }
