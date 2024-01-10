@@ -19,6 +19,7 @@
 - test
 - db
 - api client call
+- graphql
 - code refactoring
 
 #### grpc
