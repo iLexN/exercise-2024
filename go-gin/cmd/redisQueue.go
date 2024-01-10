@@ -21,20 +21,20 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		
+
 		defer func() {
 			if r := recover(); r != nil {
 				fmt.Println("Recovered in redis:queue:consume", r)
 			}
 		}()
-		
+
 		fmt.Println("redisQueue called")
 
 		// Create a new Redis client
 		client := redis.NewClient(&redis.Options{
 			Addr:     "redis:6379", // Redis server address
-			Password: "",               // Password (if any)
-			DB:       0,                // Database index
+			Password: "",           // Password (if any)
+			DB:       0,            // Database index
 		})
 
 		// Retrieve the first item from the Redis list

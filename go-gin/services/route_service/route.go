@@ -17,4 +17,5 @@ func CreateRoute(r *gin.Engine) {
 	r.GET("/try-check-jwt", middleware.AuthJwt(), controllers.CheckJwt)
 
 	r.GET("/grpc-hi", controllers.HelloGrpc)
+	r.GET("/grpc-hi-php", controllers.HelloPhpGrpc)
 }
