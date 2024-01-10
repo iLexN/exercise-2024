@@ -32,7 +32,7 @@ func PhpApiCall(c *gin.Context) {
 	}
 
 	apiResponse, err := createResponseFromBody(body)
-	
+
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
