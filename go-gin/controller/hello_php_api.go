@@ -49,7 +49,7 @@ type apiResponse struct {
 }
 
 var (
-	errUhOh = errors.New("failed to unmarshal JSON!!")
+	errUhOh = errors.New("failed to unmarshal JSON to createResponseFromBody!!")
 )
 
 func createResponseFromBody(body []byte) (*apiResponse, error) {

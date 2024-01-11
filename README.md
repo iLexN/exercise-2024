@@ -14,6 +14,9 @@
 - env
 - grpc client
 - api client call
+- json 
+  - now only play with encoding/json
+  - [may be later try other package](https://github.com/buger/jsonparser?tab=readme-ov-file#benchmarks)
 
 #### todo
 
