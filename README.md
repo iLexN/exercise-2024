@@ -13,12 +13,12 @@
 - logger
 - env
 - grpc client
+- api client call
 
 #### todo
 
 - test
 - db
-- api client call
 - graphql
 - code refactoring
 
