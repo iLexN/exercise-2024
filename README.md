@@ -20,7 +20,7 @@
 
 #### todo
 
-- test
+- test , https://github.com/stretchr/testify
 - db
 - graphql
 - code refactoring
