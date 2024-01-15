@@ -1,0 +1,13 @@
+mode: set
+go1/services/env/jwt_env.go:12.36,17.2 1 1
+go1/services/jwt_service/jwt_service.go:14.47,38.16 5 1
+go1/services/jwt_service/jwt_service.go:38.16,41.3 2 0
+go1/services/jwt_service/jwt_service.go:43.2,43.25 1 1
+go1/services/jwt_service/jwt_service.go:46.58,47.112 1 1
+go1/services/jwt_service/jwt_service.go:47.112,50.3 1 1
+go1/services/jwt_service/jwt_service.go:51.2,51.16 1 1
+go1/services/jwt_service/jwt_service.go:51.16,53.3 1 0
+go1/services/jwt_service/jwt_service.go:54.2,54.69 1 1
+go1/services/jwt_service/jwt_service.go:54.69,56.3 1 1
+go1/services/jwt_service/jwt_service.go:56.8,58.3 1 0
+go1/services/jwt_service/user_gen_jwt.go:12.61,17.2 1 1

@@ -81,3 +81,12 @@ protoc --go_out=. --go_opt=paths=source_relative \
 hello/hello.proto
 ```
 
+#### test
+
+```shell
+go test -coverprofile=coverage.out
+```
+
+```shell
+go tool cover -html=coverage.out
+```
