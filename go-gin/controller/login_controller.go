@@ -33,8 +33,11 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 
+	hash, err := loginForm.HashPassword()
+
 	c.JSON(200, gin.H{
 		"message":      "Login successful",
 		"access_token": jwtToken,
+		"passwordHash": hash,
 	})
 }
