@@ -52,3 +52,19 @@ func TestDecode(t *testing.T) {
 		t.Errorf("Decode should not return an error, got: %v", err)
 	}
 }
+
+func TestDecodeInvalidToken(t *testing.T) {
+	// Create an invalid token string
+	invalidTokenString := "invalid_token"
+
+	// Call the Decode function with an invalid token
+	claims, err := Decode(invalidTokenString)
+
+	// Check if the claims are nil and the error is the expected invalid token error
+	if claims != nil {
+		t.Error("Decode should return nil claims for an invalid token")
+	}
+	if err == nil {
+		t.Error("Decode should return error for an invalid token")
+	}
+}

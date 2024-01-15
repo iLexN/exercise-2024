@@ -9,8 +9,5 @@ type LoginForm struct {
 
 func (f *LoginForm) HashPassword() (string, error) {
 	hashedPassword, err := password.Hash(f.Username)
-	if err != nil {
-		return "", err
-	}
-	return hashedPassword, nil
+	return hashedPassword, err
 }
