@@ -15,3 +15,10 @@ func CreateJwtSetting() JwtSetting {
 		Issuer: os.Getenv("JWT_ISSUER"),
 	}
 }
+
+func CreateJwtTestSetting() {
+	JwtConfig = JwtSetting{
+		Secret: "my-secret-key111",
+		Issuer: "test.local",
+	}
+}

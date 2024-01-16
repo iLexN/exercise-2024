@@ -25,3 +25,19 @@ func TestJwtSetting(t *testing.T) {
 		t.Errorf("jwtStruct Secret mismatch. Expected: %s, got: %s", expectIssuer, jwtStruct.Issuer)
 	}
 }
+
+func TestJwtTestSetting(t *testing.T) {
+
+	CreateJwtTestSetting()
+
+	expectSecret := "my-secret-key111"
+	expectIssuer := "test.local"
+
+	if JwtConfig.Secret != expectSecret {
+		t.Errorf("jwtStruct Secret mismatch. Expected: %s, got: %s", expectSecret, JwtConfig.Secret)
+	}
+
+	if JwtConfig.Issuer != expectIssuer {
+		t.Errorf("jwtStruct Secret mismatch. Expected: %s, got: %s", expectIssuer, JwtConfig.Issuer)
+	}
+}

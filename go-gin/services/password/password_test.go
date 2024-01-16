@@ -1,6 +1,9 @@
 package password
 
-import "testing"
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
 const password_string = "this-is-password"
 
@@ -51,4 +54,15 @@ func TestPhpHashMatches(t *testing.T) {
 		t.Error("password should return a true")
 	}
 
+}
+
+func TestHashNotMatches(t *testing.T) {
+	hashString := "$2y$10$aCA3iwDtfpDd3a6FSSzFcuOuPbXSjzMBBUp7vBRmDAZjynGCOWQXW"
+
+	plainPassword := "not match"
+
+	result, err := Matches(plainPassword, hashString)
+
+	assert.False(t, result, "password not match should be return false")
+	assert.Nil(t, err, "password not match should be no error")
 }

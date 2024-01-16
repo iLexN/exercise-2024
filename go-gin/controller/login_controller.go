@@ -34,6 +34,10 @@ func LoginHandler(c *gin.Context) {
 	}
 
 	hash, err := loginForm.HashPassword()
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
 
 	c.JSON(200, gin.H{
 		"message":      "Login successful",

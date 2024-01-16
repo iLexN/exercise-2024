@@ -11,6 +11,11 @@ import (
 
 var errInvalidToken = errors.New("invalid token")
 
+type MyCustomClaims struct {
+	Role string `json:"role"`
+	jwt.RegisteredClaims
+}
+
 func CreateJwt(u *UserGenJwt) (string, error) {
 	// Define the secret key used to sign the token
 	secretKey := []byte(env.JwtConfig.Secret)
@@ -56,9 +61,4 @@ func Decode(tokenString string) (*MyCustomClaims, error) {
 	} else {
 		return nil, errInvalidToken
 	}
-}
-
-type MyCustomClaims struct {
-	Role string `json:"role"`
-	jwt.RegisteredClaims
 }
