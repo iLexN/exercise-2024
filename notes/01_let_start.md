@@ -95,3 +95,10 @@ go tool cover -html=coverage.out
 #### graphql gqlgen
 
 https://gqlgen.com/getting-started/
+
+```shell
+go run github.com/99designs/gqlgen generate
+
+# or
+go generate ./...
+```
