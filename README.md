@@ -39,7 +39,4 @@
 - redis queue
 - grpc server
 - grpc client
-
-#### todo
-
-kafka
+- kafka (Consumer & Producer)
