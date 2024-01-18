@@ -40,6 +40,9 @@ Router::addRoute(['GET', 'POST', 'HEAD'], '/try-check-jwt', [App\Controller\Inde
 Router::addRoute(['POST'], '/player-queue', [App\Controller\PlayerQueue::class, 'queue'], [
     'middleware' => [Performance::class],
 ]);
+Router::addRoute(['POST'], '/player-queue-kafka', [App\Controller\PlayerQueue::class, 'kafkaQueue'], [
+    'middleware' => [Performance::class],
+]);
 
 
 Router::get('/favicon.ico', function () {
