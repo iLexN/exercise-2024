@@ -5,6 +5,7 @@ go 1.21.5
 require (
 	github.com/99designs/gqlgen v0.17.42
 	github.com/vektah/gqlparser/v2 v2.5.10
+	github.com/vikstrous/dataloadgen v0.0.6
 )
 
 require (
@@ -17,7 +18,6 @@ require (
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sosodev/duration v1.1.0 // indirect
 	github.com/urfave/cli/v2 v2.25.5 // indirect
-	github.com/vikstrous/dataloadgen v0.0.6 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 	go.opentelemetry.io/otel v1.11.1 // indirect
 	go.opentelemetry.io/otel/trace v1.11.1 // indirect

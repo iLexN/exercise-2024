@@ -8,6 +8,7 @@ import (
 	"context"
 	"crypto/rand"
 	"fmt"
+	"go-graphql/graph/loader"
 	"go-graphql/graph/model"
 	"math/big"
 )
@@ -36,10 +37,16 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 
 // User is the resolver for the user field.
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
-	return &model.User{
-		Name: "gi" + obj.ID,
-		ID:   obj.ID,
-	}, nil
+	user, err := loader.GetUser(ctx, obj.UserID)
+
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+	//	return &model.User{
+	//		Name: "gi" + obj.ID,
+	//		ID:   obj.ID,
+	//	}, nil
 }
 
 // Mutation returns MutationResolver implementation.
