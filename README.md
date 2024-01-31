@@ -4,8 +4,6 @@
 
 ### golang
 
-#### gin (framework)
-
 - controller
 - middleware
 - jwt
@@ -18,11 +16,12 @@
   - now only play with encoding/json
   - [may be later try other package](https://github.com/buger/jsonparser?tab=readme-ov-file#benchmarks)
 - test , https://github.com/stretchr/testify
+- graphql
 
 #### todo
 
 - db
-- graphql
+
 - code refactoring
 
 #### grpc

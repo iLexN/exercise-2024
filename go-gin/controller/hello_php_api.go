@@ -4,9 +4,10 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"go1/services/http_client"
+	"io"
+
 	//	"go1/services/logger"
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -25,7 +26,7 @@ func PhpApiCall(c *gin.Context) {
 		return
 	}
 	defer response.Body.Close()
-	body, err := ioutil.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		c.JSON(400, gin.H{"error": "Couldn't parse response body"})
 		return
@@ -49,7 +50,7 @@ type apiResponse struct {
 }
 
 var (
-	errUhOh = errors.New("failed to unmarshal JSON to createResponseFromBody!!")
+	errUhOh = errors.New("failed to unmarshal JSON to createResponseFromBody")
 )
 
 func createResponseFromBody(body []byte) (*apiResponse, error) {
