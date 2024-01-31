@@ -8,3 +8,11 @@ type Todo struct {
 	UserID string `json:"userId"`
 	User   *User  `json:"user"`
 }
+
+type User struct {
+	ID   string  `json:"id"`
+	Name string  `json:"name"`
+	Todo []*Todo `json:"todo,omitempty"`
+
+	TodoIDs []string `json:"todo_ids,omitempty"`
+}

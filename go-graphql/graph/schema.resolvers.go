@@ -49,6 +49,16 @@ func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, 
 	//	}, nil
 }
 
+// Todo is the resolver for the todo field.
+func (r *userResolver) Todo(ctx context.Context, obj *model.User) ([]*model.Todo, error) {
+	//panic(fmt.Errorf("not implemented: Todo - todo"))
+	todos, err := r.GetTodosByUserId(obj)
+	if err != nil {
+		return nil, err
+	}
+	return todos, err
+}
+
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
 
@@ -58,6 +68,10 @@ func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 // Todo returns TodoResolver implementation.
 func (r *Resolver) Todo() TodoResolver { return &todoResolver{r} }
 
+// User returns UserResolver implementation.
+func (r *Resolver) User() UserResolver { return &userResolver{r} }
+
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type todoResolver struct{ *Resolver }
+type userResolver struct{ *Resolver }
