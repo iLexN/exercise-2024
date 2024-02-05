@@ -6,6 +6,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"os"
 	"time"
+	"strconv"
 )
 
 func open(config *DatabaseConfig) (*sqlx.DB, error) {
@@ -20,18 +21,21 @@ func open(config *DatabaseConfig) (*sqlx.DB, error) {
 		return nil, err
 	}
 
-	db.SetConnMaxLifetime(time.Second * 10)
-	db.SetMaxIdleConns(10)
-	db.SetMaxOpenConns(20)
+	db.SetConnMaxLifetime(config.ConnMaxLifetime)
+	db.SetMaxIdleConns(config.MaxIdleConns)
+	db.SetMaxOpenConns(config.MaxOpenConns)
 
 	return db, nil
 }
 
 type DatabaseConfig struct {
-	Username     string
-	Password     string
-	Host         string
-	DatabaseName string
+	Username         string
+	Password         string
+	Host             string
+	DatabaseName     string
+	ConnMaxLifetime  time.Duration
+	MaxIdleConns     int
+	MaxOpenConns     int
 }
 
 func (c *DatabaseConfig) dsn() string {
@@ -39,11 +43,18 @@ func (c *DatabaseConfig) dsn() string {
 }
 
 func CreateFromEnv() *DatabaseConfig {
+	connMaxLifetime, _ := strconv.Atoi(os.Getenv("DB_MAX_LIFETIME"))
+	maxIdleConns, _ := strconv.Atoi(os.Getenv("DB_MAX_IDLE_CONNS"))
+	maxOpenConns, _ := strconv.Atoi(os.Getenv("DB_MAX_OPEN_CONNS"))
+
 	return &DatabaseConfig{
-		Username:     os.Getenv("DB_USER"),
-		Password:     os.Getenv("DB_PASS"),
-		Host:         os.Getenv("DB_HOST"),
-		DatabaseName: os.Getenv("DB_NAME"),
+		Username:         os.Getenv("DB_USER"),
+		Password:         os.Getenv("DB_PASS"),
+		Host:             os.Getenv("DB_HOST"),
+		DatabaseName:     os.Getenv("DB_NAME"),
+		ConnMaxLifetime:  time.Second * connMaxLifetime,
+		MaxIdleConns:     maxIdleConns,
+		MaxOpenConns:     maxOpenConns,
 	}
 }
 
