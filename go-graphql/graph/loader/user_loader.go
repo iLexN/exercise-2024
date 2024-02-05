@@ -3,6 +3,7 @@ package loader
 import (
 	"context"
 	"fmt"
+	"strconv"
 
 	"go-graphql/graph/model"
 	"go-graphql/graph/storage"
@@ -19,9 +20,12 @@ func (u userReader) getUsers(ctx context.Context, userIds []string) ([]*model.Us
 	fmt.Printf("UserStorage getUsers %d\n", len(userIds))
 
 	for _, userId := range userIds {
+
+		num, _ := strconv.ParseInt(userId, 10, 64)
+
 		user := &model.User{
-			Name: "mu" + userId,
-			ID:   userId,
+			Name: "mu",
+			ID:   num,
 		}
 		users = append(users, user)
 	}

@@ -25,14 +25,19 @@ func main() {
 	}
 
 	port := getPort()
-	mysql, err := db.CreateFromEnv().Open()
-
+	config := db.CreateFromEnv()
+	mysql, err := db.Open(config)
+	if err != nil {
+		return
+	}
 	// don't create in here
 	//	mysql.MustExec(db.Schema)
 
-	userStorage := storage.NewUserStroage()
+	userStorage := storage.NewUserStroage(mysql)
 
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{
+		UserStorage: userStorage,
+	}}))
 
 	serverWithLoaders := loader.Middleware(userStorage, srv)
 

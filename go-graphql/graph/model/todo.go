@@ -10,9 +10,13 @@ type Todo struct {
 }
 
 type User struct {
-	ID   string  `json:"id"`
+	ID   int64   `json:"id"`
 	Name string  `json:"name"`
 	Todo []*Todo `json:"todo,omitempty"`
 
 	TodoIDs []string `json:"todo_ids,omitempty"`
+}
+
+type NewUser struct {
+	Name string `json:"name" db:"name"`
 }
