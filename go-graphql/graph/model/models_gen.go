@@ -7,7 +7,7 @@ type Mutation struct {
 
 type NewTodo struct {
 	Text   string `json:"text"`
-	UserID string `json:"userId"`
+	UserID int64  `json:"userId"`
 }
 
 type Query struct {

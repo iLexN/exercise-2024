@@ -8,7 +8,6 @@ import (
 	"context"
 	"crypto/rand"
 	"fmt"
-	"go-graphql/graph/loader"
 	"go-graphql/graph/model"
 	"math/big"
 )
@@ -43,7 +42,9 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 
 // User is the resolver for the user field.
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
-	user, err := loader.GetUser(ctx, obj.UserID)
+	//	user, err := loader.GetUser(ctx, obj.UserID)
+
+	user, err := r.UserStorage.Get(obj.UserID)
 
 	if err != nil {
 		return nil, err

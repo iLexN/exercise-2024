@@ -2,12 +2,10 @@ package storage
 
 import (
 	"errors"
-	"fmt"
 	"github.com/jmoiron/sqlx"
 	"go-graphql/graph/model"
 	"log"
 	"sync"
-	"time"
 )
 
 var (
@@ -28,26 +26,27 @@ func NewUserStroage(db *sqlx.DB) *UserStorage {
 	}
 }
 
-func (u *UserStorage) Get(userId string) (model.User, error) {
+func (u *UserStorage) Get(userId int64) (*model.User, error) {
 	u.lock.Lock()
 	defer u.lock.Unlock()
 
-	fmt.Println("user get")
-	time.Sleep(time.Second)
+	var user model.User
 
-	user, ok := u.data[userId]
-	if !ok {
-		return model.User{}, notFoundError
+	log.Printf("Debug: UserStorage Get: %d\n", userId)
+
+	err := u.db.Get(&user, "SELECT * FROM users WHERE id = ?", userId)
+	if err != nil {
+		return &model.User{}, err
 	}
 
-	return user, nil
+	return &user, nil
 }
 
 func (u *UserStorage) Put(user model.NewUser) (*model.User, error) {
 	u.lock.Lock()
 	defer u.lock.Unlock()
 
-	log.Printf("Debug: User - Name: %d\n", user.Name)
+	log.Printf("Debug: UserStorage Put - Name: %d\n", user.Name)
 
 	res, err := u.db.NamedExec("INSERT INTO `users` (`name`) VALUES (:name)", user)
 
