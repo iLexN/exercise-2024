@@ -19,7 +19,7 @@ const (
 )
 
 type Loaders struct {
-	UserLoader *dataloadgen.Loader[string, *model.User]
+	UserLoader *dataloadgen.Loader[int64, *model.User]
 }
 
 // NewLoaders instantiates data loaders for the middleware
