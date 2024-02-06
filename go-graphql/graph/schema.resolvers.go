@@ -33,7 +33,6 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
 	user, err := r.UserStorage.Put(input)
-	fmt.Printf("Debug: User - ID: %d, Name: %d\n", user.ID, user.Name)
 	return user, err
 }
 
