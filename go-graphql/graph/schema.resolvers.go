@@ -35,7 +35,6 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) 
 	user, err := r.UserStorage.Put(input)
 	fmt.Printf("Debug: User - ID: %d, Name: %d\n", user.ID, user.Name)
 	return user, err
-
 }
 
 // Todos is the resolver for the todos field.

@@ -28,6 +28,7 @@ func main() {
 	config := db.CreateFromEnv()
 	mysql, err := db.Open(config)
 	if err != nil {
+		log.Fatal("Error connect to db")
 		return
 	}
 	// don't create in here
