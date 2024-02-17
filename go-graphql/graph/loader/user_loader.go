@@ -14,19 +14,9 @@ type userReader struct {
 
 func (u userReader) getUsers(ctx context.Context, userIds []int64) ([]*model.User, []error) {
 
-	//todo: https://cloud.tencent.com/developer/article/1997275
-
-	users := make([]*model.User, 0, len(userIds))
-
-	fmt.Printf("UserStorage getUsers %d\n", len(userIds))
-
-	for _, userId := range userIds {
-
-		user := &model.User{
-			Name: "mu",
-			ID:   userId,
-		}
-		users = append(users, user)
+	users, err := u.userStorage.GetUsers(userIds)
+	if err != nil {
+		return nil, nil
 	}
 
 	return users, nil
@@ -35,7 +25,6 @@ func (u userReader) getUsers(ctx context.Context, userIds []int64) ([]*model.Use
 // GetUser returns single user by id efficiently
 func GetUser(ctx context.Context, userID int64) (*model.User, error) {
 	loaders := For(ctx)
-	fmt.Println("getuser")
 	return loaders.UserLoader.Load(ctx, userID)
 }
 

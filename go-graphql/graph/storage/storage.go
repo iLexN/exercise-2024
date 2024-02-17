@@ -27,6 +27,9 @@ func NewUserStroage(db *sqlx.DB) *UserStorage {
 }
 
 func (u *UserStorage) Get(userId int64) (*model.User, error) {
+
+	log.Printf("Debug: UserStorage get 1 user")
+
 	u.lock.Lock()
 	defer u.lock.Unlock()
 
@@ -65,4 +68,29 @@ func (u *UserStorage) Put(user model.NewUser) (*model.User, error) {
 	}
 
 	return newUser, nil
+}
+
+func (u *UserStorage) GetUsers(userIds []int64) ([]*model.User, error) {
+
+	log.Printf("Debug: UserStorage get users")
+
+	if len(userIds) == 0 {
+		return nil, nil
+	}
+
+	// Prepare the query with the user IDs using sqlx.In
+	query, args, err := sqlx.In("SELECT * FROM users WHERE id IN (?)", userIds)
+	if err != nil {
+		return nil, err
+	}
+
+	// Execute the query with the user IDs
+	query = u.db.Rebind(query)
+	var users []*model.User
+	err = u.db.Select(&users, query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
 }
