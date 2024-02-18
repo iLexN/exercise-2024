@@ -98,3 +98,5 @@ models:
         resolver: true
       name2:
         resolver: true
+      nameFull:
+        resolver: true

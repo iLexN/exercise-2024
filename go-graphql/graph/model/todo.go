@@ -20,3 +20,7 @@ type User struct {
 type NewUser struct {
 	Name string `json:"name" db:"name"`
 }
+
+func (u *User) FullName() string {
+	return u.Name + " full"
+}

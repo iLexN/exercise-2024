@@ -13,6 +13,7 @@ type User {
   id: ID!
   name: String!
   name2: String!
+  nameFull: String!
 
   todo: [Todo!]
 }

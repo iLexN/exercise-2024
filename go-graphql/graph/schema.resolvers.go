@@ -58,6 +58,11 @@ func (r *userResolver) Name2(ctx context.Context, obj *model.User) (string, erro
 	return obj.Name + "2", nil
 }
 
+// NameFull is the resolver for the nameFull field.
+func (r *userResolver) NameFull(ctx context.Context, obj *model.User) (string, error) {
+	return obj.FullName(), nil
+}
+
 // Todo is the resolver for the todo field.
 func (r *userResolver) Todo(ctx context.Context, obj *model.User) ([]*model.Todo, error) {
 	todos, err := r.GetTodosByUserId(obj)
