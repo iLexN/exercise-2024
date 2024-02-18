@@ -53,6 +53,11 @@ func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, 
 	return user, nil
 }
 
+// Name2 is the resolver for the name2 field.
+func (r *userResolver) Name2(ctx context.Context, obj *model.User) (string, error) {
+	return obj.Name + "2", nil
+}
+
 // Todo is the resolver for the todo field.
 func (r *userResolver) Todo(ctx context.Context, obj *model.User) ([]*model.Todo, error) {
 	todos, err := r.GetTodosByUserId(obj)

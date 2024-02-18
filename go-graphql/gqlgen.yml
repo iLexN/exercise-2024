@@ -96,3 +96,5 @@ models:
     fields:
       todo:
         resolver: true
+      name2:
+        resolver: true
