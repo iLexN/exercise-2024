@@ -17,11 +17,10 @@
   - [may be later try other package](https://github.com/buger/jsonparser?tab=readme-ov-file#benchmarks)
 - test , https://github.com/stretchr/testify
 - graphql
+- db (sqlx)
 
 #### todo
-
-- db
-
+- reading csv
 - code refactoring
 
 #### grpc
