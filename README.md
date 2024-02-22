@@ -38,3 +38,11 @@
 - grpc server
 - grpc client
 - kafka (Consumer & Producer)
+
+#### interesting reading
+
+- https://github.com/readme/featured/laravel-community
+
+
+#### keep learning
+- https://hyperskill.org
