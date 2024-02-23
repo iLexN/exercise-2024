@@ -41,8 +41,8 @@
 
 #### interesting reading
 
-- https://github.com/readme/featured/laravel-community
-
+- [Is Laravel the happiest developer community on the planet?](https://github.com/readme/featured/laravel-community)
+- [Improving your life with Extreme Programming](https://www.youtube.com/watch?v=pXGqRBg-K4Y)
 
 #### keep learning
 - https://hyperskill.org
