@@ -45,4 +45,4 @@
 - [Improving your life with Extreme Programming](https://www.youtube.com/watch?v=pXGqRBg-K4Y)
 
 #### keep learning
-- https://hyperskill.org
+- [https://hyperskill.org](https://hyperskill.org/profile/612681888)
