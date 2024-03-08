@@ -43,6 +43,7 @@
 
 - [Is Laravel the happiest developer community on the planet?](https://github.com/readme/featured/laravel-community)
 - [Improving your life with Extreme Programming](https://www.youtube.com/watch?v=pXGqRBg-K4Y)
+- [ref reading](https://github.com/iLexN/exercise-2024/edit/main/notes/03_reading.md)
 
 #### keep learning
 - [https://hyperskill.org](https://hyperskill.org/profile/612681888)
