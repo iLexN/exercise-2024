@@ -6,3 +6,4 @@
 - [common mistakes](https://go.dev/wiki/CommonMistakes)
 - [context control](https://zenhorace.dev/blog/context-control-go/)
 - [interfaces in go](https://fast4ward.online/posts/a-guide-to-interfaces-in-go/)
+- [Advice for new Go Programmers](https://ewanvalentine.io/blog/advice-for-new-go-programmers)
