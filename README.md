@@ -44,7 +44,7 @@
 
 - [Is Laravel the happiest developer community on the planet?](https://github.com/readme/featured/laravel-community)
 - [Improving your life with Extreme Programming](https://www.youtube.com/watch?v=pXGqRBg-K4Y)
-- [token](https://thecopenhagenbook.com/server-side-tokens)
+- [web security info](https://thecopenhagenbook.com/server-side-tokens)
 - [ref reading](https://github.com/iLexN/exercise-2024/edit/main/notes/03_reading.md)
 
 #### keep learning
