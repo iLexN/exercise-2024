@@ -45,6 +45,7 @@
 - [Is Laravel the happiest developer community on the planet?](https://github.com/readme/featured/laravel-community)
 - [Improving your life with Extreme Programming](https://www.youtube.com/watch?v=pXGqRBg-K4Y)
 - [web security info](https://thecopenhagenbook.com/server-side-tokens)
+- [Developers don’t need performance reviews](https://www.infoworld.com/article/3713300/developers-dont-need-performance-reviews.html)
 - [ref reading](https://github.com/iLexN/exercise-2024/edit/main/notes/03_reading.md)
 
 #### keep learning
