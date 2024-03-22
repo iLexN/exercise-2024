@@ -7,3 +7,4 @@
 - [context control](https://zenhorace.dev/blog/context-control-go/)
 - [interfaces in go](https://fast4ward.online/posts/a-guide-to-interfaces-in-go/)
 - [Advice for new Go Programmers](https://ewanvalentine.io/blog/advice-for-new-go-programmers)
+- [Kubernetes Memory Limits and Go](https://www.ardanlabs.com/blog/2024/02/kubernetes-memory-limits-go.html)
