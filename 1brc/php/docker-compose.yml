@@ -1,0 +1,78 @@
+version: '3.7'
+services:
+  wp:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    #    image: thecodingmachine/php:8.1-v4-apache
+    volumes:
+#      - "./public:/var/www/html"
+      - "./public/wp-config.php:/var/www/html/wp-config.php"
+      - "./atfx/plugins/atfx-general:/var/www/html/wp-content/plugins/atfx-general"
+      - "./atfx/plugins/atfx-rsa:/var/www/html/wp-content/plugins/atfx-rsa"
+      - "./atfx/plugins/atfx-dc:/var/www/html/wp-content/plugins/atfx-dc"
+      - "./atfx/plugins/atfx-utility:/var/www/html/wp-content/plugins/atfx-utility"
+      - "./atfx/plugins/atfx-robotxt:/var/www/html/wp-content/plugins/atfx-robotxt"
+      - "./min:/var/www/html/min"
+      - "./a-try:/var/www/try"
+#      - "./public/wp-content/plugins/polylang-pro:/var/www/html/wp-content/plugins/polylang-pro"
+#      - "./public/test.html:/var/www/html/test.html"
+#      - "./atfx/mu-plugins:/var/www/html/wp-content/mu-plugins"
+#      - "./public/wp-content/themes/twentytwentyone:/var/www/html/wp-content/themes/twentytwentyone"
+
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
+    networks:
+      - default
+      - wordpress
+    environment:
+      - PHP_EXTENSION_GD=1
+      - HTTP_GEOIP_COUNTRY_CODE3=HKG
+      - HTTP_GEOIP_CITY=Central
+      - HTTP_GEOIP_COUNTRY_NAME=Hong Kong
+
+  mysql:
+    image: mysql:latest
+    volumes:
+      - "./.mysql-data/db:/var/lib/mysql"
+    #    ports:
+    #      - "3306:3306"
+    networks:
+      - default
+      - wordpress
+    environment:
+      MYSQL_ROOT_PASSWORD: wp
+      MYSQL_DATABASE: wp
+      MYSQL_USER: wp
+      MYSQL_PASSWORD: wp
+
+  zip:
+    build:
+      context: ./
+      dockerfile: Dockerfile2
+    volumes:
+#      - "./zip:/usr/src/app"
+      - "./build-plugins/:/usr/src/build-plugins"
+#      - "./atfx:/usr/src/atfx"
+      - "cargo-cache:/root/.cargo/"
+
+
+#  phpmyadmin:
+#    image: phpmyadmin
+#    ports:
+#      - "8081:80"
+#    environment:
+#      - PMA_HOST=mysql
+#      - UPLOAD_LIMIT=3000000000
+#    networks:
+#      - default
+#      - wordpress
+networks:
+  wordpress:
+    name: wordpress
+    driver: bridge
+volumes:
+  cargo-cache:
+

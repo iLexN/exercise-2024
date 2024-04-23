@@ -1,0 +1,17 @@
+{
+    "name": "ilexn/1brc",
+    "autoload": {
+        "psr-4": {
+            "Ilexn\\OneBrc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "iLexN",
+            "email": "ilex.job@gmail.com"
+        }
+    ],
+    "require": {
+        "league/csv": "^9.0"
+    }
+}
