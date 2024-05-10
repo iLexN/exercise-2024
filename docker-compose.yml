@@ -95,36 +95,36 @@ services:
 #    depends_on:
 #      - zoo1
 
-  bbccdd:
-    container_name: ccbbdd
-    build:
-      context: ./ccbbdd
-      dockerfile: Dockerfile
-    volumes:
-      - ./ccbbdd:/app
-    ports:
-      - "3000:4444"
-    depends_on:
-      wait-for-db:
-        condition: service_completed_successfully
-    environment:
-      DB_DSN: "ccbbdd:ccbbdd@tcp(mysql:3306)/ccbbdd?parseTime=true"
-#    command: make run
-    command: tail -f /dev/null
+#  bbccdd:
+#    container_name: ccbbdd
+#    build:
+#      context: ./ccbbdd
+#      dockerfile: Dockerfile
+#    volumes:
+#      - ./ccbbdd:/app
+#    ports:
+#      - "3000:4444"
+#    depends_on:
+#      wait-for-db:
+#        condition: service_completed_successfully
+#    environment:
+#      DB_DSN: "ccbbdd:ccbbdd@tcp(mysql:3306)/ccbbdd?parseTime=true"
+##    command: make run
+#    command: tail -f /dev/null
 
   mysql:
     image: mysql:latest
     volumes:
       - "./.mysql-data/db:/var/lib/mysql"
-    #    ports:
-    #      - "3306:3306"
+    ports:
+      - "3306:3306"
     networks:
       - default
     environment:
-      MYSQL_ROOT_PASSWORD: ccbbdd
-      MYSQL_DATABASE: ccbbdd
-      MYSQL_USER: ccbbdd
-      MYSQL_PASSWORD: ccbbdd
+      MYSQL_ROOT_PASSWORD: "payment-portal"
+      MYSQL_DATABASE: "payment-portal"
+      MYSQL_USER: "payment-portal"
+      MYSQL_PASSWORD: "payment-portal"
 
   wait-for-db:
     image: atkrad/wait4x
@@ -132,13 +132,15 @@ services:
       - mysql
     command: tcp mysql:3306 -t 30s -i 250ms
 
-
-#  redis-commander:
-#    image: rediscommander/redis-commander:latest
-#    ports:
-#      - "8081:8081"
-#    environment:
-#      - REDIS_HOSTS=local:redis:6379
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=mysql
+      - UPLOAD_LIMIT=3000000000
+    networks:
+      - default
 
 
 networks:
