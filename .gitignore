@@ -1,3 +1,4 @@
 .fleet
 go-gen
 .mysql-data/
+.idea/

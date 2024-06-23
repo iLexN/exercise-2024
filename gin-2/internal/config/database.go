@@ -5,7 +5,7 @@ import (
 	"payment-portal/internal/env"
 )
 
-type databaseConfig struct {
+type DatabaseConfig struct {
 	Host     string
 	Port     string
 	Database string
@@ -13,7 +13,7 @@ type databaseConfig struct {
 	Password string
 }
 
-func (mysql *databaseConfig) Dns() string {
+func (mysql *DatabaseConfig) Dns() string {
 	// refer https://github.com/go-sql-driver/mysql#dsn-data-source-name for details
 	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		mysql.Username,
@@ -24,8 +24,8 @@ func (mysql *databaseConfig) Dns() string {
 	)
 }
 
-func NewMysql() *databaseConfig {
-	return &databaseConfig{
+func NewMysql() *DatabaseConfig {
+	return &DatabaseConfig{
 		Host:     env.GetString("DB_HOST", "127.0.0.1"),
 		Port:     env.GetString("DB_PORT", "3306"),
 		Database: env.GetString("DB_DATABASE", "payment-portal"),

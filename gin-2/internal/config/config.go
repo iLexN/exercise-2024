@@ -3,7 +3,7 @@ package config
 type Config struct {
 	AppEnv   *appEnv
 	Server   *serverConfig
-	Database *databaseConfig
+	Database *DatabaseConfig
 }
 
 func NewConfig() *Config {

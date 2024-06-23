@@ -10,12 +10,12 @@ import (
 type Container struct {
 	Config *config.Config
 	Logger *slog.Logger
-	Db *database.Database
+	Db     *database.Database
 }
 
 func NewContainer() *Container {
 	cfg := config.NewConfig()
-	
+
 	return &Container{
 		Config: cfg,
 		Logger: newLogger(),
