@@ -19,7 +19,7 @@ func NewContainer() *Container {
 	return &Container{
 		Config: cfg,
 		Logger: newLogger(),
-		Db:     database.NewConnection(cfg),
+		//		Db:     database.NewConnection(cfg),
 	}
 }
 

@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"payment-portal/internal/domain/user"
 )
 
 func usersRoutes(router *gin.Engine) {
@@ -33,7 +34,18 @@ func usersRoutes(router *gin.Engine) {
 		})
 	})
 
-	router.POST("/api/user/v1/create", func(c *gin.Context) {
+	router.POST("/api/internal/user/create", func(c *gin.Context) {
+
+		var inputData user.CreateUserInput
+
+		if err := c.ShouldBindJSON(&inputData); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
 		})
