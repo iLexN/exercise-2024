@@ -22,7 +22,7 @@ func Run(container *container.Container) {
 
 	router := gin.Default()
 
-	routes.Setup(router)
+	routes.Setup(router, container)
 
 	server := &http.Server{
 		Addr:         fmt.Sprintf(":%d", port),

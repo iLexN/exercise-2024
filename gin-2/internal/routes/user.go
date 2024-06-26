@@ -5,19 +5,20 @@ import (
 	"log"
 	"net/http"
 	"payment-portal/internal/domain/user"
+    "payment-portal/internal/password"
 )
 
-func usersRoutes(router *gin.Engine) {
-	router.POST("/api/user/v1/auth", func(c *gin.Context) {
+func usersRoutes(router *gin.Engine, userRepository *user.Repository) {
+	router.POST("/api/portal/user/v1/token", func(c *gin.Context) {
 
 		type Person struct {
-			Email string `form:"name"`
-			Pass  string `form:"pass"`
+			Email string `json:"email" binding:"required,email"`
+			Pass  string `json:"password" binding:"required"`
 		}
 
 		var person Person
 
-		if err := c.ShouldBind(&person); err != nil {
+		if err := c.ShouldBindJSON(&person); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": err.Error(),
 			})
@@ -28,9 +29,32 @@ func usersRoutes(router *gin.Engine) {
 		log.Println(person.Email)
 		log.Println(person.Pass)
 
+		loginUser, err := userRepository.GetByEmailOrName(person.Email)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		// check password
+        matches, err := password.Matches(person.Pass, loginUser.Password)
+        if err != nil {
+            return
+        }
+		if !matches {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "password not match",
+			})
+			return
+		}
+
+		// create jwt token
+
 		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-			"person":  person,
+			"message":   "pong",
+			"person":    person,
+			"loginUser": loginUser,
 		})
 	})
 
@@ -44,7 +68,6 @@ func usersRoutes(router *gin.Engine) {
 			})
 			return
 		}
-
 
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",

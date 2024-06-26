@@ -16,7 +16,7 @@ func newServerConfig() *serverConfig {
 
 	readTimeout := time.Duration(env.GetInt("SERVER_READ_TO", 5)) * time.Second
 	writeTimeout := time.Duration(env.GetInt("SERVER_WRITE_TO", 10)) * time.Second
-	shutdownTimeout := time.Duration(env.GetInt("SERVER_SHUTDOWN_TO", 5)) * time.Second
+	shutdownTimeout := time.Duration(env.GetInt("SERVER_SHUTDOWN_TO", 1)) * time.Second
 
 	return &serverConfig{
 		Port:            env.GetInt("SERVER_PORT", 9000),
