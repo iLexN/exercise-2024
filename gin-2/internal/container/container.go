@@ -11,7 +11,6 @@ import (
 type Container struct {
 	Config         *config.Config
 	Logger         *slog.Logger
-//	Db             *database.Database
 	UserRepository *user.Repository
 }
 
@@ -23,7 +22,6 @@ func NewContainer() *Container {
 	return &Container{
 		Config:         cfg,
 		Logger:         newLogger(),
-//		Db:             db,
 		UserRepository: &userRepository,
 	}
 }

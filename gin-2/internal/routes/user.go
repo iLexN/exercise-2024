@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 	"payment-portal/internal/domain/user"
-    "payment-portal/internal/password"
+	"payment-portal/internal/password"
 )
 
 func usersRoutes(router *gin.Engine, userRepository *user.Repository) {
@@ -38,10 +38,10 @@ func usersRoutes(router *gin.Engine, userRepository *user.Repository) {
 		}
 
 		// check password
-        matches, err := password.Matches(person.Pass, loginUser.Password)
-        if err != nil {
-            return
-        }
+		matches, err := password.Matches(person.Pass, loginUser.Password)
+		if err != nil {
+			return
+		}
 		if !matches {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": "password not match",
