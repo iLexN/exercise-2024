@@ -4,6 +4,7 @@ type Config struct {
 	AppEnv   *appEnv
 	Server   *serverConfig
 	Database *DatabaseConfig
+	JwtConfig *JwtConfig
 }
 
 func NewConfig() *Config {
@@ -11,5 +12,6 @@ func NewConfig() *Config {
 		AppEnv:   newAppEnv(),
 		Server:   newServerConfig(),
 		Database: NewMysql(),
+		JwtConfig: newJwtConfig(),
 	}
 }
