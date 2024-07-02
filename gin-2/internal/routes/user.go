@@ -5,10 +5,11 @@ import (
 	"log"
 	"net/http"
 	"payment-portal/internal/domain/user"
+	"payment-portal/internal/jwt"
 	"payment-portal/internal/password"
 )
 
-func usersRoutes(router *gin.Engine, userRepository *user.Repository) {
+func usersRoutes(router *gin.Engine, userRepository *user.Repository, tokenServices *jwt.TokenServices) {
 	router.POST("/api/portal/user/v1/token", func(c *gin.Context) {
 
 		type Person struct {
@@ -40,6 +41,9 @@ func usersRoutes(router *gin.Engine, userRepository *user.Repository) {
 		// check password
 		matches, err := password.Matches(person.Pass, loginUser.Password)
 		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
 			return
 		}
 		if !matches {
@@ -50,11 +54,17 @@ func usersRoutes(router *gin.Engine, userRepository *user.Repository) {
 		}
 
 		// create jwt token
+		tokenInfo, err := tokenServices.CreateToken(loginUser)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"message":   "pong",
-			"person":    person,
-			"loginUser": loginUser,
+			"access_token": tokenInfo.SignedToken,
+			"expires_at":   tokenInfo.ExpireAt.UTC(),
 		})
 	})
 

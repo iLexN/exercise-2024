@@ -8,5 +8,5 @@ import (
 func Setup(r *gin.Engine, container *container.Container) {
 	pingRoute(r)
 
-	usersRoutes(r, container.UserRepository)
+	usersRoutes(r, container.UserRepository, container.JwtTokenServices)
 }

@@ -6,12 +6,14 @@ import (
 	"payment-portal/internal/config"
 	"payment-portal/internal/database"
 	"payment-portal/internal/domain/user"
+	"payment-portal/internal/jwt"
 )
 
 type Container struct {
-	Config         *config.Config
-	Logger         *slog.Logger
-	UserRepository *user.Repository
+	Config           *config.Config
+	Logger           *slog.Logger
+	UserRepository   *user.Repository
+	JwtTokenServices *jwt.TokenServices
 }
 
 func NewContainer() *Container {
@@ -20,9 +22,10 @@ func NewContainer() *Container {
 	userRepository := user.Repository{Db: db.Db}
 
 	return &Container{
-		Config:         cfg,
-		Logger:         newLogger(),
-		UserRepository: &userRepository,
+		Config:           cfg,
+		Logger:           newLogger(),
+		UserRepository:   &userRepository,
+		JwtTokenServices: jwt.NewTokenServices(cfg.JwtConfig),
 	}
 }
 
