@@ -6,10 +6,11 @@ import (
 	"net/http"
 	"payment-portal/internal/domain/user"
 	"payment-portal/internal/jwt"
+	"payment-portal/internal/middleware"
 	"payment-portal/internal/password"
 )
 
-func usersRoutes(router *gin.Engine, userRepository *user.Repository, tokenServices *jwt.TokenServices) {
+func usersRoutes(router *gin.Engine, mg *middleware.Middleware, userRepository *user.Repository, tokenServices *jwt.TokenServices) {
 	router.POST("/api/portal/user/v1/token", func(c *gin.Context) {
 
 		type Person struct {
@@ -65,6 +66,13 @@ func usersRoutes(router *gin.Engine, userRepository *user.Repository, tokenServi
 		c.JSON(http.StatusOK, gin.H{
 			"access_token": tokenInfo.SignedToken,
 			"expires_at":   tokenInfo.ExpireAt.UTC(),
+		})
+	})
+
+	router.GET("/api/portal/user/v1/info", mg.AuthToken(), func(c *gin.Context) {
+
+		c.JSON(http.StatusOK, gin.H{
+			"message": "pong1",
 		})
 	})
 

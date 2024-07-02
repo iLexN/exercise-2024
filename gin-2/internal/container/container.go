@@ -20,12 +20,14 @@ func NewContainer() *Container {
 	cfg := config.NewConfig()
 	db := database.NewConnection(cfg)
 	userRepository := user.Repository{Db: db.Db}
+	logger := newLogger()
+	jwtTokenService := jwt.NewTokenServices(cfg.JwtConfig)
 
 	return &Container{
 		Config:           cfg,
-		Logger:           newLogger(),
+		Logger:           logger,
 		UserRepository:   &userRepository,
-		JwtTokenServices: jwt.NewTokenServices(cfg.JwtConfig),
+		JwtTokenServices: jwtTokenService,
 	}
 }
 

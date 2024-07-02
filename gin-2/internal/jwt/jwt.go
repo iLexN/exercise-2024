@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"errors"
 	"payment-portal/internal/config"
 	"payment-portal/internal/model"
 	"strconv"
@@ -8,6 +9,8 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 )
+
+var errInvalidToken = errors.New("invalid token")
 
 type TokenInfo struct {
 	SignedToken string
@@ -60,4 +63,19 @@ func (t *TokenServices) CreateToken(u *model.User) (*TokenInfo, error) {
 		SignedToken: signedToken,
 		ExpireAt:    expire,
 	}, nil
+}
+
+func (t *TokenServices) DecodeToken(tokenString string) (*jwt.RegisteredClaims, error) {
+
+	token, err := jwt.ParseWithClaims(tokenString, &jwt.RegisteredClaims{}, func(token *jwt.Token) (interface{}, error) {
+		// Provide the key or public key to validate the token's signature
+		return t.getSecretKey(), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	if claims, ok := token.Claims.(*jwt.RegisteredClaims); ok && token.Valid {
+		return claims, nil
+	}
+	return nil, errInvalidToken
 }
