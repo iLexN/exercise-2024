@@ -70,9 +70,14 @@ func usersRoutes(router *gin.Engine, mg *middleware.Middleware, userRepository *
 	})
 
 	router.GET("/api/portal/user/v1/info", mg.AuthToken(), func(c *gin.Context) {
-
+		loginUser, ok := c.Get("user")
+		if !ok {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "user not found"})
+			return
+		}
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong1",
+			"user":    loginUser,
 		})
 	})
 
