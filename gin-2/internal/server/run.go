@@ -67,7 +67,7 @@ func servereServe(server *http.Server, container *container.Container) {
 	// catching ctx.Done(). timeout of 5 seconds.
 	select {
 	case <-ctx.Done():
-		log.Println(fmt.Sprintf("timeout of %d seconds.", shutdownTimeout))
+		log.Println(fmt.Sprintf("timeout of %.2f seconds.", shutdownTimeout.Seconds()))
 	}
 	log.Println("Server exiting")
 }
