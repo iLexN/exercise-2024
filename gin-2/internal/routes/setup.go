@@ -19,4 +19,10 @@ func Setup(r *gin.Engine, container *container.Container) {
 		container.UserRepository,
 		container.JwtTokenServices,
 	)
+
+	gatewaysRoutes(
+		r,
+		&middlewareGroup,
+		container.GatewayRepository,
+	)
 }

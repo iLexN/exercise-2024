@@ -17,3 +17,11 @@ type Gateway struct {
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 }
+
+func (g *Gateway) ToDisplay() map[string]interface{} {
+	return map[string]interface{}{
+		"id":           g.ID,
+		"name":         g.Name,
+		"display_name": g.DisplayName,
+	}
+}

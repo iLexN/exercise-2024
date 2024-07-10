@@ -6,6 +6,7 @@ import (
 	"payment-portal/internal/config"
 	"payment-portal/internal/database"
 	"payment-portal/internal/domain/exchange_rate"
+	"payment-portal/internal/domain/gateway"
 	"payment-portal/internal/domain/transaction"
 	"payment-portal/internal/domain/user"
 	"payment-portal/internal/jwt"
@@ -17,6 +18,7 @@ type Container struct {
 	UserRepository         *user.Repository
 	TransactionRepository  *transaction.Repository
 	ExchangeRateRepository *exchange_rate.Repository
+	GatewayRepository      *gateway.Repository
 	JwtTokenServices       *jwt.TokenServices
 }
 
@@ -28,6 +30,7 @@ func NewContainer() *Container {
 	userRepository := user.Repository{Db: db.Db}
 	transactionRepository := transaction.Repository{Db: db.Db}
 	exchangeRateRepository := exchange_rate.Repository{Db: db.Db}
+	gatewayRepository := gateway.Repository{Db: db.Db}
 
 	logger := newLogger()
 	jwtTokenService := jwt.NewTokenServices(cfg.JwtConfig)
@@ -38,6 +41,7 @@ func NewContainer() *Container {
 		UserRepository:         &userRepository,
 		TransactionRepository:  &transactionRepository,
 		ExchangeRateRepository: &exchangeRateRepository,
+		GatewayRepository:      &gatewayRepository,
 		JwtTokenServices:       jwtTokenService,
 	}
 }
