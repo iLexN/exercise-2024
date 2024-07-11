@@ -1,10 +1,9 @@
 package model
 
 import (
-	//    "gorm.io/gorm"
+	"gorm.io/datatypes"
 	"time"
 )
-import "gorm.io/datatypes"
 
 type User struct {
 	ID        uint      `gorm:"primarykey" json:"id"`

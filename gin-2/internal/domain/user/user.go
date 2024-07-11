@@ -5,6 +5,7 @@ type Roles string
 const (
 	RoleAdmin      Roles = "admin"
 	RoleSuperAdmin Roles = "super-admin"
+	Roleuser       Roles = "super-admin"
 )
 
 type CreateUserInput struct {

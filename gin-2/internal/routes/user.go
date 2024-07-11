@@ -81,7 +81,7 @@ func usersRoutes(router *gin.Engine, mg *middleware.Middleware, userRepository *
 		})
 	})
 
-	router.POST("/api/internal/user/create", func(c *gin.Context) {
+	router.POST("/api/portal/user/v1/create", mg.AuthToken(), func(c *gin.Context) {
 
 		var inputData user.CreateUserInput
 
@@ -92,8 +92,20 @@ func usersRoutes(router *gin.Engine, mg *middleware.Middleware, userRepository *
 			return
 		}
 
+		// todo: check email is already exist?
+
+		newUser, err := userRepository.CreateUser(&inputData)
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
 		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
+			"message": "User Created",
+			"user":    newUser,
 		})
 	})
 
