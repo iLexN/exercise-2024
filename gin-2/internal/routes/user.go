@@ -7,6 +7,7 @@ import (
 	"payment-portal/internal/domain/user"
 	"payment-portal/internal/jwt"
 	"payment-portal/internal/middleware"
+	"payment-portal/internal/paginator"
 	"payment-portal/internal/password"
 )
 
@@ -109,4 +110,21 @@ func usersRoutes(router *gin.Engine, mg *middleware.Middleware, userRepository *
 		})
 	})
 
+	router.GET("/api/portal/user/v1/list", mg.AuthToken(), func(c *gin.Context) {
+		paginatorInfo := paginator.FromGinContext(c, 10)
+
+		search := c.Query("search")
+
+		result := userRepository.GetPaginatorWithFilter(paginatorInfo, search)
+
+		c.JSON(http.StatusOK, gin.H{
+			"data":      result.Users,
+			"paginator": result.Paginator,
+			"from":      result.Paginator.From,
+			"last_page": result.Paginator.LastPage,
+			"per_page":  result.Paginator.PerPage,
+			"to":        result.Paginator.To,
+			"total":     result.Paginator.TotalItems,
+		})
+	})
 }

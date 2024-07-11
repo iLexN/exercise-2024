@@ -1,11 +1,9 @@
 package user
 
 import (
-	"encoding/json"
-	"gorm.io/datatypes"
 	"gorm.io/gorm"
 	"payment-portal/internal/model"
-	"payment-portal/internal/password"
+	"payment-portal/internal/paginator"
 )
 
 type Repository struct {
@@ -39,32 +37,27 @@ func (r *Repository) GetById(id uint) (*model.User, error) {
 	return &u, nil
 }
 
-func (r *Repository) CreateUser(input *CreateUserInput) (*model.User, error) {
+func (r *Repository) GetPaginatorWithFilter(p *paginator.Paginator, search string) *ListResult {
+	var users []model.User
+	var totalItems int64
 
-	hashPassword, err := password.Hash(input.Password)
+	query := r.Db.Model(&model.User{})
 
-	if err != nil {
-		return nil, err
+	if search != "" {
+		query = query.Where("name LIKE ? OR email LIKE ?", "%"+search+"%", "%"+search+"%")
 	}
 
-	roleJSON, err := json.Marshal([]Roles{input.Role})
-	if err != nil {
-		return nil, err
+	query.
+		Order("created_at DESC").
+		Count(&totalItems).
+		Limit(p.GetPageSize()).
+		Offset(p.GetOffset()).
+		Find(&users)
+
+	paginatorResult := p.ToPaginatorResult(totalItems, len(users))
+
+	return &ListResult{
+		Users:     users,
+		Paginator: *paginatorResult,
 	}
-
-	user := model.User{
-		Name:     input.Name,
-		Email:    input.Email,
-		Password: hashPassword,
-		Roles:    datatypes.JSON(roleJSON),
-	}
-
-	result := r.Db.Create(&user)
-
-	if result.Error != nil {
-		return nil, result.Error
-	}
-
-	return &user, nil
-
 }

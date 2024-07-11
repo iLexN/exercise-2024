@@ -1,5 +1,10 @@
 package user
 
+import (
+	"payment-portal/internal/model"
+	"payment-portal/internal/paginator"
+)
+
 type Roles string
 
 const (
@@ -13,4 +18,9 @@ type CreateUserInput struct {
 	Email    string `json:"email" `
 	Password string `json:"password" `
 	Role     Roles  `json:"role" `
+}
+
+type ListResult struct {
+	Users     []model.User `json:"users"`
+	Paginator paginator.LengthAwarePaginator
 }
