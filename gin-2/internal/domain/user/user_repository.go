@@ -25,6 +25,18 @@ func (r *Repository) GetByEmailOrName(input string) (*model.User, error) {
 	return &u, nil
 }
 
+func (r *Repository) GetByEmail(email string) (*model.User, error) {
+	var u model.User
+
+	result := r.Db.Where("email = ?", email).First(&u)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return &u, nil
+}
+
 func (r *Repository) GetById(id uint) (*model.User, error) {
 	var u model.User
 

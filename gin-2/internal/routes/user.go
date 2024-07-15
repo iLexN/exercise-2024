@@ -93,7 +93,13 @@ func usersRoutes(router *gin.Engine, mg *middleware.Middleware, userRepository *
 			return
 		}
 
-		// todo: check email is already exist?
+		existingUser, err := userRepository.GetByEmail(inputData.Email)
+		if err == nil && existingUser != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Email already exists",
+			})
+			return
+		}
 
 		newUser, err := userRepository.CreateUser(&inputData)
 
