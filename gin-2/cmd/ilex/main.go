@@ -4,6 +4,7 @@ import (
 	"log"
 	"log/slog"
 	"payment-portal/internal/container"
+	"payment-portal/internal/domain/gateway"
 	"time"
 )
 
@@ -15,8 +16,12 @@ func main() {
 	slog.Info("hhiii", "di", *di)
 
 	yesterday := time.Now().AddDate(0, 0, -1)
-	gateways := di.GatewayRepository.GetAllWithEod(yesterday)
+	list := di.GatewayRepository.GetAllWithEod(yesterday)
 
-	slog.Info("ggg", gateways)
+	exchangeRates := di.ExchangeRateRepository.GetAll()
+
+	newII := gateway.CalGateways(list, exchangeRates)
+
+	slog.Info("ggg", newII)
 
 }

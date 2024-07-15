@@ -24,7 +24,7 @@ func (r *Repository) GetAllWithEod(date time.Time) []Gateway {
 	var gateways []Gateway
 
 	r.Db.Preload("Balances", func(db *gorm.DB) *gorm.DB {
-		return db.Where("balance_at = ?", date.Format("2006-01-02"))
+		return db.Where("balance_at = ?", date.Format("2006-01-02")).Order("currency")
 	}).Where("active = ?", true).Order("`order` ASC").Find(&gateways)
 
 	return gateways

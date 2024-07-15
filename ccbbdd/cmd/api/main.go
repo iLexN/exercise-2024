@@ -11,7 +11,7 @@ import (
 	"bbccdd/internal/database"
 	"bbccdd/internal/env"
 	"bbccdd/internal/version"
-//	"bbccdd/internal/config"
+	// "bbccdd/internal/config"
 )
 
 func main() {
@@ -52,7 +52,7 @@ func run(logger *slog.Logger) error {
 	cfg.db.dsn = env.GetString("DB_DSN", "user:pass@tcp(localhost:3306)/example?parseTime=true")
 	cfg.db.automigrate = env.GetBool("DB_AUTOMIGRATE", true)
 	cfg.jwt.secretKey = env.GetString("JWT_SECRET_KEY", "kqnhduag2vjxaghatfne346ltgmcbigs")
-	
+
 	showVersion := flag.Bool("version", false, "display version and exit")
 
 	flag.Parse()

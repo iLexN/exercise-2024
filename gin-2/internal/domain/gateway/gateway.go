@@ -21,6 +21,18 @@ type Gateway struct {
 	Balances []Balance.Balance `gorm:"foreignKey:GatewaysID"`
 }
 
+type Summary struct {
+	Gateway
+	//	Balance     map[string]map[string]interface{}
+	LastUpdated time.Time
+}
+
+type CalResult struct {
+	CalAllBalance float64
+	Currency      []map[string]interface{}
+	Gateways      []Summary
+}
+
 func (g *Gateway) ToDisplay() map[string]interface{} {
 	return map[string]interface{}{
 		"id":           g.ID,
