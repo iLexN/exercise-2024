@@ -4,6 +4,7 @@ import (
 	"log"
 	"log/slog"
 	"payment-portal/internal/container"
+	"time"
 )
 
 func main() {
@@ -13,13 +14,9 @@ func main() {
 	log.Printf("cfg: %#v", *di.Config.AppEnv) // Log the value of cfg
 	slog.Info("hhiii", "di", *di)
 
-	ui, err := di.UserRepository.GetById(100)
+	yesterday := time.Now().AddDate(0, 0, -1)
+	gateways := di.GatewayRepository.GetAllWithEod(yesterday)
 
-	if err != nil {
-		slog.Info("eeeee", "eeeee", err.Error())
-		return
-	}
-
-	slog.Info(ui.Name)
+	slog.Info("ggg", gateways)
 
 }
