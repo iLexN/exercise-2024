@@ -7,9 +7,12 @@ import (
 )
 
 func CalGateways(gateways []Gateway, exchangeRates []exchange_rate.ExchangeRate) *CalResult {
-	var eachCurrency []map[string]interface{}
+
 	var allBalance float64
-	allCurrency := make(map[string]map[string]interface{})
+	allCurrency := make(map[string]struct {
+		Currency  string
+		CalAmount float64
+	})
 	var newGateways []Summary
 	var maxLastUpdatedAt time.Time
 
@@ -21,19 +24,19 @@ func CalGateways(gateways []Gateway, exchangeRates []exchange_rate.ExchangeRate)
 		}
 
 		for _, balance := range gateway.Balances {
-			eachCurrency = append(eachCurrency, map[string]interface{}{
-				"currency":       balance.Currency,
-				"cal_amount":     balance.CalAmount,
-				"gateway_amount": balance.GatewayAmount,
-			})
 
 			if _, ok := allCurrency[balance.Currency]; !ok {
-				allCurrency[balance.Currency] = map[string]interface{}{
-					"currency":   balance.Currency,
-					"cal_amount": balance.GetCalAmount(),
+				allCurrency[balance.Currency] = struct {
+					Currency  string
+					CalAmount float64
+				}{
+					Currency:  balance.Currency,
+					CalAmount: balance.GetCalAmount(),
 				}
 			} else {
-				allCurrency[balance.Currency]["cal_amount"] = allCurrency[balance.Currency]["cal_amount"].(float64) + balance.GetCalAmount()
+				currencyData := allCurrency[balance.Currency]
+				currencyData.CalAmount += balance.GetCalAmount()
+				allCurrency[balance.Currency] = currencyData
 			}
 
 			if balance.HaveCalAmount() {
@@ -52,22 +55,34 @@ func CalGateways(gateways []Gateway, exchangeRates []exchange_rate.ExchangeRate)
 
 	return &CalResult{
 		CalAllBalance: allBalance,
-		Currency:      mapToSlice(sortCurrency(allCurrency)),
+		Currency:      mapToSlice(allCurrency),
 		Gateways:      newGateways,
 	}
 }
 
-func mapToSlice(inputMap map[string]map[string]interface{}) []map[string]interface{} {
-	var outputSlice []map[string]interface{}
-	for _, data := range inputMap {
-		tempMap := make(map[string]interface{})
-		for key, value := range data {
-			tempMap[key] = value
-		}
+func mapToSlice(inputMap map[string]struct {
+	Currency  string
+	CalAmount float64
+}) []struct {
+	Currency  string
+	CalAmount float64
+} {
+	result := make([]struct {
+		Currency  string
+		CalAmount float64
+	}, 0, len(inputMap))
 
-		outputSlice = append(outputSlice, tempMap)
+	for _, data := range inputMap {
+		result = append(result, struct {
+			Currency  string
+			CalAmount float64
+		}{
+			Currency:  data.Currency,
+			CalAmount: data.CalAmount,
+		})
 	}
-	return outputSlice
+
+	return result
 }
 
 func sortCurrency(allCurrency map[string]map[string]interface{}) map[string]map[string]interface{} {

@@ -24,5 +24,7 @@ func Setup(r *gin.Engine, container *container.Container) {
 		r,
 		&middlewareGroup,
 		container.GatewayRepository,
+		container.ExchangeRateRepository,
+		container.TransactionRepository,
 	)
 }
