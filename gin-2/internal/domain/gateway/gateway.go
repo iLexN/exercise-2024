@@ -2,8 +2,8 @@ package gateway
 
 import (
 	"gorm.io/datatypes"
-	"math"
 	"payment-portal/internal/domain/Balance"
+	"payment-portal/internal/utility"
 	"sort"
 	"time"
 )
@@ -31,38 +31,29 @@ type Summary struct {
 
 type CalResult struct {
 	CalAllBalance float64
-	Currency      []struct {
-		Currency  string
-		CalAmount float64
-	}
-	Gateways []Summary
+	Currency      []CurrencyAmount
+	Gateways      []Summary
 }
 
-func (r *CalResult) CurrencyToDisplay() []struct {
-	Currency  string
-	CalAmount float64
-} {
+type CurrencyAmount struct {
+	Currency string
+	Amount   float64
+}
+
+func (r *CalResult) CurrencyToDisplay() []CurrencyAmount {
 	// Sort the r.Currency slice by the Currency field
 	sort.Slice(r.Currency, func(i, j int) bool {
 		return r.Currency[i].Currency < r.Currency[j].Currency
 	})
 
 	// Create a new slice to hold the sorted data
-	sortedCurrency := make([]struct {
-		Currency  string
-		CalAmount float64
-	}, len(r.Currency))
-
-	ratio := math.Pow(10, float64(2))
+	sortedCurrency := make([]CurrencyAmount, len(r.Currency))
 
 	// Copy the sorted data to the new slice
 	for i, data := range r.Currency {
-		sortedCurrency[i] = struct {
-			Currency  string
-			CalAmount float64
-		}{
-			Currency:  data.Currency,
-			CalAmount: math.Round(data.CalAmount*ratio) / ratio,
+		sortedCurrency[i] = CurrencyAmount{
+			Currency: data.Currency,
+			Amount:   utility.RoundFloat(data.Amount, 2),
 		}
 	}
 
@@ -70,8 +61,7 @@ func (r *CalResult) CurrencyToDisplay() []struct {
 }
 
 func (r *CalResult) BalanceToDisplay() float64 {
-	ratio := math.Pow(10, float64(2))
-	return math.Round(r.CalAllBalance*ratio) / ratio
+	return utility.RoundFloat(r.CalAllBalance, 2)
 }
 
 func (g *Gateway) ToDisplay() map[string]interface{} {

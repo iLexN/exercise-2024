@@ -2,17 +2,13 @@ package gateway
 
 import (
 	"payment-portal/internal/domain/exchange_rate"
-	"sort"
 	"time"
 )
 
 func CalGateways(gateways []Gateway, exchangeRates []exchange_rate.ExchangeRate) *CalResult {
 
 	var allBalance float64
-	allCurrency := make(map[string]struct {
-		Currency  string
-		CalAmount float64
-	})
+	allCurrency := make(map[string]CurrencyAmount)
 	var newGateways []Summary
 	var maxLastUpdatedAt time.Time
 
@@ -26,16 +22,13 @@ func CalGateways(gateways []Gateway, exchangeRates []exchange_rate.ExchangeRate)
 		for _, balance := range gateway.Balances {
 
 			if _, ok := allCurrency[balance.Currency]; !ok {
-				allCurrency[balance.Currency] = struct {
-					Currency  string
-					CalAmount float64
-				}{
-					Currency:  balance.Currency,
-					CalAmount: balance.GetCalAmount(),
+				allCurrency[balance.Currency] = CurrencyAmount{
+					Currency: balance.Currency,
+					Amount:   balance.GetCalAmount(),
 				}
 			} else {
 				currencyData := allCurrency[balance.Currency]
-				currencyData.CalAmount += balance.GetCalAmount()
+				currencyData.Amount += balance.GetCalAmount()
 				allCurrency[balance.Currency] = currencyData
 			}
 
@@ -60,52 +53,15 @@ func CalGateways(gateways []Gateway, exchangeRates []exchange_rate.ExchangeRate)
 	}
 }
 
-func mapToSlice(inputMap map[string]struct {
-	Currency  string
-	CalAmount float64
-}) []struct {
-	Currency  string
-	CalAmount float64
-} {
-	result := make([]struct {
-		Currency  string
-		CalAmount float64
-	}, 0, len(inputMap))
+func mapToSlice(inputMap map[string]CurrencyAmount) []CurrencyAmount {
+	result := make([]CurrencyAmount, 0, len(inputMap))
 
 	for _, data := range inputMap {
-		result = append(result, struct {
-			Currency  string
-			CalAmount float64
-		}{
-			Currency:  data.Currency,
-			CalAmount: data.CalAmount,
+		result = append(result, CurrencyAmount{
+			Currency: data.Currency,
+			Amount:   data.Amount,
 		})
 	}
 
 	return result
-}
-
-func sortCurrency(allCurrency map[string]map[string]interface{}) map[string]map[string]interface{} {
-
-	// Convert the map keys to a slice for sorting
-	var currencies []string
-	for currency := range allCurrency {
-		currencies = append(currencies, currency)
-	}
-
-	// Sort the currencies slice
-	sort.Slice(currencies, func(i, j int) bool {
-		return allCurrency[currencies[i]]["currency"].(string) < allCurrency[currencies[j]]["currency"].(string)
-	})
-
-	// Create a new map to store the sorted currencies
-	sortedCurrency := make(map[string]map[string]interface{})
-
-	// Populate the new map with the sorted currencies
-	for _, currency := range currencies {
-		sortedCurrency[currency] = allCurrency[currency]
-	}
-
-	return sortedCurrency
-
 }
