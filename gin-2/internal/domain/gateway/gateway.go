@@ -31,7 +31,7 @@ type Summary struct {
 
 type CalResult struct {
 	CalAllBalance float64
-	Currency      []CurrencyAmount
+	Currency      []*CurrencyAmount
 	Gateways      []Summary
 }
 
@@ -40,18 +40,18 @@ type CurrencyAmount struct {
 	Amount   float64
 }
 
-func (r *CalResult) CurrencyToDisplay() []CurrencyAmount {
+func (r *CalResult) CurrencyToDisplay() []*CurrencyAmount {
 	// Sort the r.Currency slice by the Currency field
 	sort.Slice(r.Currency, func(i, j int) bool {
 		return r.Currency[i].Currency < r.Currency[j].Currency
 	})
 
 	// Create a new slice to hold the sorted data
-	sortedCurrency := make([]CurrencyAmount, len(r.Currency))
+	sortedCurrency := make([]*CurrencyAmount, len(r.Currency))
 
 	// Copy the sorted data to the new slice
 	for i, data := range r.Currency {
-		sortedCurrency[i] = CurrencyAmount{
+		sortedCurrency[i] = &CurrencyAmount{
 			Currency: data.Currency,
 			Amount:   utility.RoundFloat(data.Amount, 2),
 		}

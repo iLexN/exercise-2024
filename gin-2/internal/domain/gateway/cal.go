@@ -8,7 +8,7 @@ import (
 func CalGateways(gateways []Gateway, exchangeRates []exchange_rate.ExchangeRate) *CalResult {
 
 	var allBalance float64
-	allCurrency := make(map[string]CurrencyAmount)
+	allCurrency := make(map[string]*CurrencyAmount)
 	var newGateways []Summary
 	var maxLastUpdatedAt time.Time
 
@@ -22,7 +22,7 @@ func CalGateways(gateways []Gateway, exchangeRates []exchange_rate.ExchangeRate)
 		for _, balance := range gateway.Balances {
 
 			if _, ok := allCurrency[balance.Currency]; !ok {
-				allCurrency[balance.Currency] = CurrencyAmount{
+				allCurrency[balance.Currency] = &CurrencyAmount{
 					Currency: balance.Currency,
 					Amount:   balance.GetCalAmount(),
 				}
@@ -53,11 +53,11 @@ func CalGateways(gateways []Gateway, exchangeRates []exchange_rate.ExchangeRate)
 	}
 }
 
-func mapToSlice(inputMap map[string]CurrencyAmount) []CurrencyAmount {
-	result := make([]CurrencyAmount, 0, len(inputMap))
+func mapToSlice(inputMap map[string]*CurrencyAmount) []*CurrencyAmount {
+	result := make([]*CurrencyAmount, 0, len(inputMap))
 
 	for _, data := range inputMap {
-		result = append(result, CurrencyAmount{
+		result = append(result, &CurrencyAmount{
 			Currency: data.Currency,
 			Amount:   data.Amount,
 		})
