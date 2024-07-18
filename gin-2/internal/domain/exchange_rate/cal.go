@@ -2,6 +2,8 @@ package exchange_rate
 
 func CalByExchangeRate(amount *float64, fromCurrency string, toCurrency string, exchangeRates []ExchangeRate) float64 {
 
+	fromCurrency = AdjustCurrency(fromCurrency)
+
 	if amount == nil {
 		return 0
 	}
@@ -12,4 +14,12 @@ func CalByExchangeRate(amount *float64, fromCurrency string, toCurrency string, 
 		}
 	}
 	return 0
+}
+
+func AdjustCurrency(currency string) string {
+	if currency == "MYR-FPX" {
+		return "MYR"
+	}
+
+	return currency
 }

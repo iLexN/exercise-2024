@@ -21,15 +21,16 @@ func CalGateways(gateways []Gateway, exchangeRates []exchange_rate.ExchangeRate)
 
 		for _, balance := range gateway.Balances {
 
-			if _, ok := allCurrency[balance.Currency]; !ok {
-				allCurrency[balance.Currency] = &CurrencyAmount{
-					Currency: balance.Currency,
+			adjCurrency := exchange_rate.AdjustCurrency(balance.Currency)
+			if _, ok := allCurrency[adjCurrency]; !ok {
+				allCurrency[adjCurrency] = &CurrencyAmount{
+					Currency: adjCurrency,
 					Amount:   balance.GetCalAmount(),
 				}
 			} else {
-				currencyData := allCurrency[balance.Currency]
+				currencyData := allCurrency[adjCurrency]
 				currencyData.Amount += balance.GetCalAmount()
-				allCurrency[balance.Currency] = currencyData
+				allCurrency[adjCurrency] = currencyData
 			}
 
 			if balance.HaveCalAmount() {

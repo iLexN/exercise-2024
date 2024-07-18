@@ -42,7 +42,7 @@ func gatewaysRoutes(
 		calResult := gateway.CalGateways(list, exchangeRates)
 
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Gateways list",
+			"message": "Yesterday Eod Dashboard Gateways.",
 			"data": gin.H{
 				"data": gin.H{
 					"total_transactions": total,
