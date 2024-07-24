@@ -50,6 +50,7 @@ func gatewaysRoutes(
 						"cal_all_balance": calResult.BalanceToDisplay(),
 						"currency":        calResult.CurrencyToDisplay(),
 					},
+					"gateways": calResult.GatewaysToDisplay(),
 				},
 			},
 		})

@@ -29,6 +29,13 @@ type Summary struct {
 	LastUpdated time.Time
 }
 
+func (s *Summary) ToDisplay() map[string]interface{} {
+	g := s.Gateway.ToDisplay()
+	g["last_updated"] = s.LastUpdated.UTC()
+
+	return g
+}
+
 type CalResult struct {
 	CalAllBalance float64
 	Currency      []*CurrencyAmount
@@ -64,10 +71,21 @@ func (r *CalResult) BalanceToDisplay() float64 {
 	return utility.RoundFloat(r.CalAllBalance, 2)
 }
 
+func (r *CalResult) GatewaysToDisplay() []interface{} {
+	out := make([]interface{}, 0, len(r.Gateways))
+	for _, data := range r.Gateways {
+		info := data.ToDisplay()
+		out = append(out, info)
+	}
+
+	return out
+}
+
 func (g *Gateway) ToDisplay() map[string]interface{} {
 	return map[string]interface{}{
-		"id":           g.ID,
-		"name":         g.Name,
-		"display_name": g.DisplayName,
+		"id":            g.ID,
+		"name":          g.Name,
+		"display_name":  g.DisplayName,
+		"client_config": g.ClientConfig,
 	}
 }
