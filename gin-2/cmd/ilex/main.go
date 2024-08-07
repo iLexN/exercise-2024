@@ -22,6 +22,6 @@ func main() {
 
 	newII := gateway.CalGateways(list, exchangeRates)
 
-	slog.Info("ggg", newII)
+	slog.Info("ggg", slog.Any("di", newII))
 
 }

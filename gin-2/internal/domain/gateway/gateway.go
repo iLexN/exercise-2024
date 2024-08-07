@@ -2,7 +2,7 @@ package gateway
 
 import (
 	"gorm.io/datatypes"
-	"payment-portal/internal/domain/Balance"
+	"payment-portal/internal/domain/balance"
 	"payment-portal/internal/utility"
 	"sort"
 	"time"
