@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -43,7 +44,7 @@ func servereServe(server *http.Server, container *container.Container) {
 	slog.Info("Starting server...", "port", port)
 	go func() {
 		// service connections
-		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Fatalf("listen: %s\n", err)
 		}
 	}()
@@ -65,9 +66,11 @@ func servereServe(server *http.Server, container *container.Container) {
 	}
 
 	// catching ctx.Done(). timeout of 5 seconds.
-	select {
-	case <-ctx.Done():
-		log.Println(fmt.Sprintf("timeout of %.2f seconds.", shutdownTimeout.Seconds()))
-	}
+	//	select {
+	//	case <-ctx.Done():
+	//		log.Printf("timeout of %.2f seconds.", shutdownTimeout.Seconds())
+	//	}
+	<-ctx.Done()
+	log.Printf("timeout of %.2f seconds.", shutdownTimeout.Seconds())
 	log.Println("Server exiting")
 }

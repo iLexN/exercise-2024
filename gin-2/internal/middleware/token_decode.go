@@ -36,7 +36,13 @@ func (m *Middleware) AuthToken() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+
 		user, err := m.Container.UserRepository.GetById(uint(id))
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+			c.Abort()
+			return
+		}
 
 		c.Set("user", user)
 
