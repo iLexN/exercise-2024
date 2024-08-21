@@ -9,6 +9,8 @@ import (
 func Setup(r *gin.Engine, container *container.Container) {
 	pingRoute(r)
 
+	success(r, container.UipathRepository)
+
 	middlewareGroup := middleware.Middleware{
 		Container: container,
 	}

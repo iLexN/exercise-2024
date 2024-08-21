@@ -14,13 +14,17 @@ type Gateway struct {
 	DisplayName  string
 	Config       datatypes.JSON
 	ClientConfig datatypes.JSON
-	active       bool
-	syncMethod   int
+	Active       bool
+	SyncMethod   int
 	Order        int
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 
 	Balances []Balance.Balance `gorm:"foreignKey:GatewaysID"`
+}
+
+func (g *Gateway) IsActive() bool {
+	return g.Active
 }
 
 type Summary struct {
